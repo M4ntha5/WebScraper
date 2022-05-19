@@ -1,8 +1,37 @@
-﻿@{
+﻿@model Tracking
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Vin</th>
+                <th scope="col">Description</th>
+                <th scope="col">Keys</th>
+                <th scope="col">Delivered to warehouse</th>
+                <th scope="col">Title</th>
+                <th scope="col">Container number</th>
+                <th scope="col">Expected arrival date</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr>
+                <th scope="row">@Model.Vin</th>
+                <td>@Model.Year @Model.Model</td>
+                <td>@Model.KeyStatus</td>
+                <td>@Model.DeliveredToLoadingPlace</td>
+                <td>@Model.TitleStatus</td>
+                <td>@Model.ContainerNumber</td>
+                <td>@Model.ExpectedArrivalDate</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

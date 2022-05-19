@@ -31,9 +31,13 @@ namespace WebScraper.Services
 
       var jsonResult = result.ParsedText;
       var parsedJson = JsonConvert.DeserializeObject<JsonModel>(jsonResult + "}");
-      
+
+      var tracking = parsedJson.Data;
+
+      tracking.KeyStatus = tracking.KeyStatus == "1" ? "Yes" : "No";
+      tracking.TitleStatus = tracking.TitleStatus == "1" ? "Yes" : "No";
        
-      return null;
+      return parsedJson.Data;
 
     }
 

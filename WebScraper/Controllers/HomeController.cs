@@ -26,7 +26,7 @@ namespace WebScraper.Controllers
       var vin = "WBSLX9C58DD159859";
       var data = await _scraper.FetchInfo(vin);
 
-      return View();
+      return View(data);
     }
 
     public IActionResult Privacy()
