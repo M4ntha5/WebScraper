@@ -13,7 +13,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__DB": "Server=IT06\\sqlexpress;Database=WebScraper;Trusted_Connection=True;MultipleActiveResultSets=True;"
+        "ConnectionStrings__DB": "Server=IT06\\sqlexpress;Database=WebScraper;Trusted_Connection=True;MultipleActiveResultSets=True;",
+        "PORT": "111"
       }
     },
     "WebScraper": {

@@ -1,0 +1,60 @@
+﻿USE [WebScraper]
+GO
+/****** Object:  Table [dbo].[Logs]    Script Date: 2022-05-20 14:18:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Logs](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Level] [int] NOT NULL,
+	[Message] [ntext] NOT NULL,
+	[Date] [datetime] NOT NULL,
+ CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TrackingImages]    Script Date: 2022-05-20 14:18:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TrackingImages](
+	[Id] [int] IDENTITY(0,1) NOT NULL,
+	[TrackingId] [int] NOT NULL,
+	[ImageLink] [varchar](200) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Trackings]    Script Date: 2022-05-20 14:18:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Trackings](
+	[Id] [int] IDENTITY(0,1) NOT NULL,
+	[Vin] [varchar](50) NOT NULL,
+	[Year] [int] NOT NULL,
+	[Model] [varchar](50) NOT NULL,
+	[Keys] [bit] NOT NULL,
+	[DeliveredToLoadingPlace] [datetime] NULL,
+	[Title] [bit] NOT NULL,
+	[ContainerNumber] [varchar](50) NULL,
+	[ExpectedArrivalDate] [datetime] NULL,
+	[CreatedAt] [datetime] NOT NULL,
+	[UpdatedAt] [datetime] NOT NULL,
+ CONSTRAINT [PK__Tracking__3214EC077513E23A] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Trackings] ADD  CONSTRAINT [DF__Trackings__Keys__24927208]  DEFAULT ((0)) FOR [Keys]
+GO
+ALTER TABLE [dbo].[Trackings] ADD  CONSTRAINT [DF__Trackings__Title__25869641]  DEFAULT ((0)) FOR [Title]
+GO
