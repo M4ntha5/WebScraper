@@ -1,24 +1,26 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using WebScraper.Models;
+using WebScraper.DTO;
 
 namespace WebScraper.Services
 {
   public class Scraper
   {
-    private string TrackingLinkOld = "https://vehicle-status-search.netlify.app/";
-    private string ExampleVin = "WBSLX9C58DD159859";
-    
-    private string TrackingLink = "https://vehicle-status-search.netlify.app/.netlify/functions/fetch?vin=";
+    private readonly string TrackingLink = "https://vehicle-status-search.netlify.app/.netlify/functions/fetch?vin=";
 
-    public async Task<Tracking> FetchInfo(string vin)
+    private readonly ILogService _logger;
+
+    public Scraper(ILogService logger)
+    {
+      _logger = logger;
+    }
+
+    public async Task<Data> FetchInfo(string vin)
     {
       var website = $"{TrackingLink}{vin}";
 
@@ -32,17 +34,16 @@ namespace WebScraper.Services
       var jsonResult = result.ParsedText;
       var parsedJson = JsonConvert.DeserializeObject<JsonModel>(jsonResult + "}");
 
+      if (parsedJson.Status != "200" || parsedJson.Data?.Vin == null)
+      {
+        await _logger.LogErrorAsync("VIN not found");
+        return null;
+      }
+
       var tracking = parsedJson.Data;
 
-      tracking.KeyStatus = tracking.KeyStatus == "1" ? "Yes" : "No";
-      tracking.TitleStatus = tracking.TitleStatus == "1" ? "Yes" : "No";
-       
-      return parsedJson.Data;
+      return tracking;
 
-    }
-
-
-
-
+    }  
   }
 }
