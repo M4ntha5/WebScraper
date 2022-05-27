@@ -24,8 +24,11 @@ namespace WebScraper.Services
       try
       {
         if (dto == null || dto.Vin == null)
+        {
           await _logger.LogErrorAsync("Error saving tracking, data is null");
-
+          return;
+        }
+        
         _context.Trackings.Add(new Tracking
         {
           Vin = dto.Vin,

@@ -28,7 +28,12 @@ namespace WebScraper
     {
       services.AddControllersWithViews();
 
-      services.AddDbContext<TrackingContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DB")));
+            //services.AddDbContext<TrackingContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DB")));
+
+            var connectionString = Configuration.GetConnectionString("DB");
+      services.AddDbContext<TrackingContext>(o => 
+      o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
       services.AddScoped<Scraper>();
       services.AddScoped<ITrackingService, TrackingService>();
       services.AddScoped<ILogService, LogService>();
