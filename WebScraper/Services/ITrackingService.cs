@@ -10,5 +10,6 @@ namespace WebScraper.Services
     Task<List<TrackingDto>> GetTrackings();
     Task SaveTracking(Data dto);
     Task UpdateTracking(Data fetchedData);
+    Task DeleteTracking(int carId);
   }
 }

@@ -77,6 +77,12 @@ namespace WebScraper.Controllers
       return RedirectToAction(nameof(Index));
     }
 
+    public async Task<IActionResult> DeleteSelected(int id)
+    {
+      await _tracking.DeleteTracking(id);
+      return RedirectToAction(nameof(Index));
+    }
+
     public IActionResult Privacy()
     {
       return View();

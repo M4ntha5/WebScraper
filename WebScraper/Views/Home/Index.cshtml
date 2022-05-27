@@ -31,31 +31,35 @@
 <div class="mt-4">
     <table class="table">
         <thead>
-            <tr>
-                <th scope="col">Vin</th>
-                <th scope="col">Description</th>
-                <th scope="col">Keys</th>
-                <th scope="col">Delivered to warehouse</th>
-                <th scope="col">Title</th>
-                <th scope="col">Container number</th>
-                <th scope="col">Expected arrival date</th>
-                <th scope="col">Updated at</th>
-            </tr>
+        <tr>
+            <th scope="col">Vin</th>
+            <th scope="col">Description</th>
+            <th scope="col">Keys</th>
+            <th scope="col">Delivered to warehouse</th>
+            <th scope="col">Title</th>
+            <th scope="col">Container number</th>
+            <th scope="col">Expected arrival date</th>
+            <th scope="col">Updated at</th>
+            <th scope="col">Actions</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <th scope="row">@item.Vin</th>
-                    <td>@item.Year @item.Model</td>
-                    <td>@item.Keys</td>
-                    <td>@item.DeliveredToLoadingPlace?.ToString("yyyy-MM-dd")</td>
-                    <td>@item.Title</td>
-                    <td>@item.ContainerNumber</td>
-                    <td>@item.ExpectedArrivalDate?.ToString("yyyy-MM-dd")</td>
-                    <td>@item.UpdatedAt</td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Vin</th>
+                <td>@item.Year @item.Model</td>
+                <td>@item.Keys</td>
+                <td>@item.DeliveredToLoadingPlace?.ToString("yyyy-MM-dd")</td>
+                <td>@item.Title</td>
+                <td>@item.ContainerNumber</td>
+                <td>@item.ExpectedArrivalDate?.ToString("yyyy-MM-dd")</td>
+                <td>@item.UpdatedAt</td>
+                <td>
+                    <a asp-action="DeleteSelected" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

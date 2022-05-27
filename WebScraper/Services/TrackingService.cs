@@ -19,6 +19,19 @@ namespace WebScraper.Services
       _logger = logger;
     }
 
+    public async Task DeleteTracking(int carId)
+    {
+      var tracking = await _context.Trackings
+        .Include(x => x.TrackingImages)
+        .FirstOrDefaultAsync(x => x.Id == carId);
+
+      if (tracking != null)
+      {
+        _context.Trackings.Remove(tracking);
+        await _context.SaveChangesAsync();
+      }
+    }
+
     public async Task SaveTracking(Data dto)
     {
       try
@@ -54,7 +67,7 @@ namespace WebScraper.Services
     {
       try
       {
-        return await _context.Trackings
+        var res =  await _context.Trackings
           .Include(x => x.TrackingImages)
           .Select(x => new TrackingDto
           {
@@ -69,12 +82,12 @@ namespace WebScraper.Services
             ExpectedArrivalDate = x.ExpectedArrivalDate,
             UpdatedAt = x.UpdatedAt,
             Images = x.TrackingImages
-            .Select(x => x.ImageLink)
+            .Select(i => i.ImageLink)
             .ToList()
           })
           .OrderByDescending(x => x.UpdatedAt)
           .ToListAsync();
-    
+        return res;
       }
       catch (Exception e)
       {
