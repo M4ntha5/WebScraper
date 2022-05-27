@@ -32,8 +32,8 @@ namespace WebScraper
 
             var connectionString = Configuration.GetConnectionString("DB");
       services.AddDbContext<TrackingContext>(o =>
-      o.UseSqlServer(connectionString));
-      //o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+      //o.UseSqlServer(connectionString));
+      o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
       services.AddScoped<Scraper>();
       services.AddScoped<ITrackingService, TrackingService>();
