@@ -1,6 +1,5 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -11,7 +10,7 @@ namespace WebScraper.Services
 {
   public class Scraper
   {
-    private readonly string TrackingLink = "https://vehicle-status-search.netlify.app/.netlify/functions/fetch?vin=";
+    private const string TrackingLink = "https://vehicle-status-search.netlify.app/.netlify/functions/fetch?vin=";
 
     private readonly ILogService _logger;
 
@@ -24,17 +23,17 @@ namespace WebScraper.Services
     {
       var website = $"{TrackingLink}{vin}";
 
-      HttpClient http = new HttpClient();
+      var http = new HttpClient();
       var response = await http.GetByteArrayAsync(website);
-      String source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
+      var source = Encoding.GetEncoding("utf-8").GetString(response, 0, response.Length - 1);
       source = WebUtility.HtmlDecode(source);
-      HtmlDocument result = new HtmlDocument();
+      var result = new HtmlDocument();
       result.LoadHtml(source);
 
       var jsonResult = result.ParsedText;
       var parsedJson = JsonConvert.DeserializeObject<JsonModel>(jsonResult + "}");
 
-      if (parsedJson.Status != "200" || parsedJson.Data?.Vin == null)
+      if (parsedJson?.Status != "200" || string.IsNullOrEmpty(parsedJson.Data?.Vin))
       {
         await _logger.LogErrorAsync("VIN not found");
         return null;

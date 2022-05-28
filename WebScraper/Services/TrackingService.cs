@@ -36,7 +36,7 @@ namespace WebScraper.Services
     {
       try
       {
-        if (dto == null || dto.Vin == null)
+        if (dto?.Vin == null)
         {
           await _logger.LogErrorAsync("Error saving tracking, data is null");
           return;
@@ -52,8 +52,8 @@ namespace WebScraper.Services
           Title = dto.TitleStatus == "1",
           ContainerNumber = dto.ContainerNumber,
           ExpectedArrivalDate = dto.ExpectedArrivalDate,
-          CreatedAt = DateTime.Now,
-          UpdatedAt = DateTime.Now
+          CreatedAt = DateTime.UtcNow,
+          UpdatedAt = DateTime.UtcNow
         });
         await _context.SaveChangesAsync();
       }
@@ -101,14 +101,21 @@ namespace WebScraper.Services
       var old = await _context.Trackings
         .Include(x => x.TrackingImages)
         .FirstOrDefaultAsync(x => x.Vin == fetchedData.Vin);
+      if (old == null)
+      {
+        await _logger.LogErrorAsync(
+          $"Cannot update, because car with such VIN not found {fetchedData.Vin}");
+        return;
+      }
 
-      old.TrackingImages = fetchedData.Images
-        .Select(x => new TrackingImage
-        {
-          ImageLink = x,
-          TrackingId = old.Id
-        })
-        .ToList();
+      if(fetchedData.Images != null && fetchedData.Images.Any())
+        old.TrackingImages = fetchedData.Images
+          .Select(x => new TrackingImage
+          {
+            ImageLink = x,
+            TrackingId = old.Id
+          })
+          .ToList();
 
 
       old.Year = int.Parse(fetchedData.Year);
@@ -118,8 +125,7 @@ namespace WebScraper.Services
       old.ExpectedArrivalDate = old.ExpectedArrivalDate;
       old.DeliveredToLoadingPlace = old.DeliveredToLoadingPlace;
       old.ContainerNumber = old.ContainerNumber;
-      old.UpdatedAt = DateTime.Now;
-
+      old.UpdatedAt = DateTime.UtcNow;
 
       await _context.SaveChangesAsync();
     }

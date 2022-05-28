@@ -30,7 +30,7 @@ namespace WebScraper.DTO
     [JsonProperty("expectedArrivalDate")]
     public DateTime? ExpectedArrivalDate { get; set; }
 
-    [JsonProperty("images")]
-    public List<string> Images { get; set; }
+    [JsonProperty("images")] 
+    public List<string> Images { get; set; } = new List<string>();
   }
 }
