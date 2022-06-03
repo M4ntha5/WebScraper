@@ -32,12 +32,14 @@ namespace WebScraper
 
       var connectionString = Configuration.GetConnectionString("DB");
       services.AddDbContext<TrackingContext>(o =>
-      //o.UseSqlServer(connectionString));
-      o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+      o.UseSqlServer(connectionString));
+      //o.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
       services.AddScoped<Scraper>();
       services.AddScoped<ITrackingService, TrackingService>();
       services.AddScoped<ILogService, LogService>();
+      
+      services.AddControllersWithViews().AddRazorRuntimeCompilation();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

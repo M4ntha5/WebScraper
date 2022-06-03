@@ -12,7 +12,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ConnectionStrings__DB": "Server=(local);Database=WebScraper;Trusted_Connection=True;MultipleActiveResultSets=True;",
+        "ConnectionStrings__DB": "Server=IT06\\sqlexpress;Database=WebScraper;Trusted_Connection=True;MultipleActiveResultSets=True;",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PORT": "111"
       }
