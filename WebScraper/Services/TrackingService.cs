@@ -122,9 +122,9 @@ namespace WebScraper.Services
       old.Model = fetchedData.Model;
       old.Title = fetchedData.TitleStatus == "1";
       old.Keys = fetchedData.KeyStatus == "1";
-      old.ExpectedArrivalDate = old.ExpectedArrivalDate;
-      old.DeliveredToLoadingPlace = old.DeliveredToLoadingPlace;
-      old.ContainerNumber = old.ContainerNumber;
+      old.ExpectedArrivalDate = fetchedData.ExpectedArrivalDate;
+      old.DeliveredToLoadingPlace = fetchedData.DeliveredToLoadingPlace;
+      old.ContainerNumber = fetchedData.ContainerNumber;
       old.UpdatedAt = DateTime.UtcNow;
 
       await _context.SaveChangesAsync();
